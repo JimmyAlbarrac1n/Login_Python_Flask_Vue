@@ -41,7 +41,7 @@
             class="form-control" 
             id="password" 
             v-model="userForm.password" 
-            placeholder="Deja en blanco para mantener la actual"
+           
           >
           
         </div>
@@ -95,13 +95,19 @@
         this.loading = true;
         
         try {
-          // Si no se proporciona contraseña, necesitamos obtener la actual
-          if (!this.userForm.password) {
-            const currentUser = await UserService.getUserById(this.user._id);
-            this.userForm.password = currentUser.data.password;
+          // Si no se proporciona contraseña, no la incluimos en la actualización
+          const userData = {
+            name: this.userForm.name,
+            lastname: this.userForm.lastname,
+            email: this.userForm.email
+          };
+          
+          // Solo agregamos la contraseña si se proporcionó una nueva
+          if (this.userForm.password) {
+            userData.password = this.userForm.password;
           }
           
-          await UserService.updateUser(this.user._id, this.userForm);
+          await UserService.updateUser(this.user._id, userData);
           
           // Cerrar el modal
           const modalElement = document.getElementById('editUserModal');

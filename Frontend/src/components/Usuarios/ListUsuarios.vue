@@ -56,14 +56,11 @@
                 <td>{{ user.email }}</td>
                 <td>
                   <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-info" @click="viewUser(user._id)">
-                      <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-warning" @click="editUser(user)">
-                      <i class="bi bi-pencil"></i>
+                    <button class="btn btn-sm btn-warning me-2" @click="editUser(user)">
+                      <i class="bi bi-pencil-fill"></i> Editar
                     </button>
                     <button class="btn btn-sm btn-danger" @click="confirmDelete(user)">
-                      <i class="bi bi-trash"></i>
+                      <i class="bi bi-trash-fill"></i> Eliminar
                     </button>
                   </div>
                 </td>
@@ -108,24 +105,6 @@
       </div>
     </div>
 
-    <!-- Modal para ver detalles de usuario -->
-    <div class="modal fade" id="viewUserModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Detalles del Usuario</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <detalle-usuario 
-              :userId="selectedUserId" 
-              v-if="selectedUserId"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Modal de confirmación para eliminar -->
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
@@ -151,7 +130,6 @@
 <script>
 import SaveUsuarios from './SaveUsuarios.vue';
 import EditUsuarios from './EditUsuarios.vue';
-import DetalleUsuario from './DetalleUsuario.vue';
 import UserService from '@/services/UserService';
 import { Modal } from 'bootstrap';
 import * as bootstrap from 'bootstrap';
@@ -159,19 +137,16 @@ import * as bootstrap from 'bootstrap';
 export default {
   components: {
     SaveUsuarios,
-    EditUsuarios,
-    DetalleUsuario
+    EditUsuarios
   },
   data() {
     return {
       users: [],
       filteredUsers: [],
       selectedUser: null,
-      selectedUserId: null,
       searchTerm: '',
       loading: true,
       editModal: null,
-      viewModal: null,
       deleteModal: null
     };
   },
